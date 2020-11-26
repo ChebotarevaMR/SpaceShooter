@@ -3,7 +3,7 @@
 public enum EnemyType { Small, Large };
 
 [Serializable]
-public class EnemySet: IEnemySet
+public class EnemySet
 {
     public EnemyType Type { get; }
 

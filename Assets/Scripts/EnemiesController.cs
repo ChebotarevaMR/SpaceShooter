@@ -18,6 +18,7 @@ public class EnemiesController : MonoBehaviour
     private float _time;
 
     public event Action EnemiesEnded;
+
     public void StartGame(ILevel level)
     {
         _randomListEnemies = GetRandomListEnemyTypes(level.Enemies);
@@ -106,8 +107,8 @@ public class EnemiesController : MonoBehaviour
         if (currentEnemy != null)
         {
             var x = UnityEngine.Random.Range(_border.XLeft, _border.XRight);
-            var quaternion = Quaternion.Euler(0, 0, DEEGREE * UnityEngine.Random.Range(0, 23));
-            var y = _border.YTop + currentEnemy.GetComponent<BoxCollider>().size.magnitude;
+            var quaternion = Quaternion.Euler(0, 0, DEEGREE * UnityEngine.Random.Range(0, 360.0f / DEEGREE));
+            var y = _border.YTop + currentEnemy.GetComponent<PolygonCollider2D>().bounds.size.magnitude;
 
             return Instantiate(currentEnemy, new Vector3(x, y, 0), quaternion, ParentFromEnemies);
 
@@ -115,7 +116,7 @@ public class EnemiesController : MonoBehaviour
         return null;
     }
 
-    private List<EnemyType> GetRandomListEnemyTypes(List<IEnemySet> enemies)
+    private List<EnemyType> GetRandomListEnemyTypes(List<EnemySet> enemies)
     {
         List<int> listCounts = enemies.Select(enemy => enemy.Count).ToList();
 

@@ -9,7 +9,7 @@ public class Level : ILevel
     public LevelState State { get; set; }
 
     [field: NonSerialized]
-    public List<IEnemySet> Enemies { get; set; }
+    public List<EnemySet> Enemies { get; set; }
 
     public int Seed { get; }
 

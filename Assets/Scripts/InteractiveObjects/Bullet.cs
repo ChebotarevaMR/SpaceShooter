@@ -6,7 +6,8 @@ public class Bullet : MonoBehaviour
     public bool _isStop;
 
     private IShooter _shooter;
-    public void SetShip(IShooter shooter)
+
+    public void SetShooter(IShooter shooter)
     {
         _shooter = shooter;
     }
@@ -15,13 +16,13 @@ public class Bullet : MonoBehaviour
         _isStop = true;
     }
 
-    void Update()
+    private void Update()
     {
         if (_isStop) return;
         transform.position += transform.up * Speed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (_isStop) return;
         var enemy = other.GetComponent<Enemy>();
@@ -31,7 +32,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (_isStop) return;
         if (other.GetComponent<Border>() != null)

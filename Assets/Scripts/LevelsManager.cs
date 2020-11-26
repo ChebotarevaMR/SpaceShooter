@@ -6,15 +6,20 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class LevelsManager
 {
-    private List<Level> _levels;
-    private Level _current;
-
     private const string _nameSettingsFile = "settings.dat";
     private const int MIN_COUNT_TYPE_ENEMY = 2;
     private const int MAX_COUNT_TYPE_ENEMY = 5;
     private const int MIN_COUNT_ENEMIES = 5;
     private const int MAX_COUNT_ENEMIES = 15;
     private const int DEFAULT_COUNT_LEVELS = 10;
+
+    private List<Level> _levels;
+    private Level _current;
+
+    public List<ILevel> Levels
+    {
+        get { return _levels.OfType<ILevel>().ToList(); }
+    }
 
     public void LoadLevels()
     {
@@ -108,10 +113,10 @@ public class LevelsManager
         return levels;
     }
 
-    private List<IEnemySet> GenerateEnemySets(Random random)
+    private List<EnemySet> GenerateEnemySets(Random random)
     {
         int count = random.Next(MIN_COUNT_TYPE_ENEMY, MAX_COUNT_TYPE_ENEMY);
-        List<IEnemySet> enemySets = new List<IEnemySet>();
+        List<EnemySet> enemySets = new List<EnemySet>();
 
         for (int i = 0; i < count; i++)
         {
@@ -130,11 +135,6 @@ public class LevelsManager
         int count = random.Next(MIN_COUNT_ENEMIES, MAX_COUNT_ENEMIES);
 
         return new EnemySet(enemyType, count);
-    }
-
-    public List<ILevel> Levels
-    {
-        get { return _levels.OfType<ILevel>().ToList(); }
     }
 
     private void SaveLevels()

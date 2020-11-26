@@ -3,5 +3,5 @@
 public interface ILevel
 {
     LevelState State { get; }
-    List<IEnemySet> Enemies { get; }
+    List<EnemySet> Enemies { get; }
 }

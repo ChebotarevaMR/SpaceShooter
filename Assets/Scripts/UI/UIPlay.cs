@@ -7,10 +7,10 @@ public class UIPlay : MonoBehaviour
     public Text ScoreText;
     public Text LifeText;
 
+    private Ship _ship;
+
     public event Action Restart;
     public event Action Exit;
-
-    private Ship _ship;
 
     public void Init(Ship ship)
     {
@@ -20,8 +20,8 @@ public class UIPlay : MonoBehaviour
 
         _ship.LifeUpdate += OnLifeUpdate;
         _ship.ScoreUpdate += OnScoreUpdate;
-        LifeText.text = _ship.Life.ToString();
-        ScoreText.text = _ship.Score.ToString();
+        LifeText.text = $"Life: {_ship.Life}";
+        ScoreText.text = $"Score: {_ship.Score}";
     }
 
     public void OnRestartClick()
@@ -42,11 +42,11 @@ public class UIPlay : MonoBehaviour
 
     private void OnScoreUpdate(int value)
     {
-        ScoreText.text = value.ToString();
+        ScoreText.text = $"Score: {value}";
     }
 
     private void OnLifeUpdate(int value)
     {
-        LifeText.text = value.ToString();
+        LifeText.text = $"Life: {value}";
     }
 }

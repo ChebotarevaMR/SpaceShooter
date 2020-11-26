@@ -9,22 +9,16 @@ public class Border : MonoBehaviour
 
     private void Start()
     {
-        var bounds = GetComponent<BoxCollider>().bounds;
+        var bounds = GetComponent<BoxCollider2D>().bounds;
 
         var yHalfExtents = bounds.extents.y;
-
         var yCenter = bounds.center.y;
-
         YTop = transform.position.y + (yCenter + yHalfExtents);
-
         YBottom = transform.position.y + (yCenter - yHalfExtents);
 
         var xHalfExtents = bounds.extents.x;
-
         var xCenter = bounds.center.x;
-
         XRight = transform.position.x + (xCenter + xHalfExtents);
-
         XLeft = transform.position.x + (xCenter - xHalfExtents);
 
     }

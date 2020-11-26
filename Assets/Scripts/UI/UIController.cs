@@ -14,8 +14,8 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        Menu.StartClick += OnStart;
-        Menu.ExitClick += OnExit;
+        Menu.Start += OnStart;
+        Menu.Exit += OnExit;
 
         GameOver.Restart += OnRestart;
         GameOver.Exit += OnExit;

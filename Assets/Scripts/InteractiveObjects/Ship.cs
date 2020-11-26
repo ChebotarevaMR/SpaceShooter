@@ -13,6 +13,8 @@ public class Ship : MonoBehaviour, IShooter
     private float _time;
     private List<Bullet> _bullets = new List<Bullet>();
     private bool _isStop;
+    private Border _border;
+    private float _shipRadius;
 
     public event Action<int> LifeUpdate;
     public event Action<int> ScoreUpdate;
@@ -48,10 +50,11 @@ public class Ship : MonoBehaviour, IShooter
 
     private void Start()
     {
+        _border = FindObjectOfType<Border>();
         _time = MinIntervalBetweenShots;
+        _shipRadius = GetComponent<PolygonCollider2D>().bounds.size.magnitude / 2.0f;
     }
 
-    // TODO rigidbody move
     private void Update()
     {
         if (_isStop) return;
@@ -66,15 +69,30 @@ public class Ship : MonoBehaviour, IShooter
         Move(x, y);
     }
 
+    // TODO rigidbody move
     private void Move(float x, float y)
     {
-        transform.position += new Vector3(x, y, 0) * Time.deltaTime * Speed;
+        var movement = new Vector3(x, y, 0) * Time.deltaTime * Speed;
+        if (CheckMove(movement))
+        {
+            transform.position += movement;
+        }
+    }
+
+    private bool CheckMove(Vector3 movement)
+    {
+        Vector3 point = transform.position + movement;
+        return
+            point.x + _shipRadius < _border.XRight &&
+            point.x - _shipRadius > _border.XLeft &&
+            point.y + _shipRadius < _border.YTop &&
+            point.y - _shipRadius > _border.YBottom;
     }
 
     private void Shoot()
     {
         var bullet = Instantiate(Bullet, transform.position, Bullet.gameObject.transform.rotation);
-        bullet.SetShip(this);
+        bullet.SetShooter(this);
         _bullets.Add(bullet);
     }
 
@@ -84,7 +102,7 @@ public class Ship : MonoBehaviour, IShooter
         Destroy(bullet.gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (_isStop) return;
         Enemy enemy = other.GetComponent<Enemy>();
