@@ -16,12 +16,15 @@ public class EnemiesController : MonoBehaviour
     private Border _border;
     private bool _isStop = true;
     private float _time;
+    private int _beginCountEnemies;
 
     public event Action EnemiesEnded;
+    public event Action<int, int> ChangedEnemiesCount;
 
     public void StartGame(ILevel level)
     {
         _randomListEnemies = GetRandomListEnemyTypes(level.Enemies);
+        _beginCountEnemies = _randomListEnemies.Count;
         _isStop = false;
         _time = TIME_INTERVAL;
     }
@@ -63,15 +66,18 @@ public class EnemiesController : MonoBehaviour
     private void OnEnemyPass(Enemy enemy)
     {
         ReleaseEnemy(enemy);
+        ChangedEnemiesCount?.Invoke(_beginCountEnemies, _randomListEnemies.Count + _aliveEnemies.Count);
     }
 
     private void OnEnemyHit(Enemy enemy)
     {
         ReleaseEnemy(enemy);
+        ChangedEnemiesCount?.Invoke(_beginCountEnemies, _randomListEnemies.Count + _aliveEnemies.Count);
     }
     private void OnEnemyShipCollision(Enemy enemy)
     {
         ReleaseEnemy(enemy);
+        ChangedEnemiesCount?.Invoke(_beginCountEnemies, _randomListEnemies.Count + _aliveEnemies.Count);
     }
 
     private void ReleaseEnemy(Enemy enemy)

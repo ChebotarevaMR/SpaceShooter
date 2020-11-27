@@ -2,8 +2,8 @@
 
 public class Bullet : MonoBehaviour
 {
-    public float Speed = 3.0f;
-    public bool _isStop;
+    public float Speed = 7.0f;
+    private bool _isStop;
 
     private IShooter _shooter;
 

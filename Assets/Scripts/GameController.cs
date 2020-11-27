@@ -12,6 +12,9 @@ public class GameController : MonoBehaviour
     public Map MapControl;
 
     [Space]
+    public LevelProgress LevelProgress;
+
+    [Space]
     public UIController UIController;
 
     private LevelsManager _levelsManager = new LevelsManager();
@@ -24,6 +27,8 @@ public class GameController : MonoBehaviour
         MapControl.GenerateMap(_levelsManager.Levels);
 
         EnemiesController.EnemiesEnded += OnEnemiesEnded;
+        LevelProgress.Init(EnemiesController);
+
         UIController.StartGame += OnStartGame;
         UIController.RestartGame += OnRestartGame;
         UIController.ExitGame += OnExitGame;
@@ -98,6 +103,7 @@ public class GameController : MonoBehaviour
         _player.LifeUpdate += OnPlayerLifeUpdate;
         EnemiesController.Release();
         EnemiesController.StartGame(_currentLevel);
+        LevelProgress.StartGame();
         UIController.ShowPlay(_player);
     }
 }

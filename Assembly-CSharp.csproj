@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Level.cs" />
     <Compile Include="Assets\Scripts\UI\UIWin.cs" />
     <Compile Include="Assets\Scripts\InteractiveObjects\Enemy.cs" />
+    <Compile Include="Assets\Scripts\LevelProgress.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
